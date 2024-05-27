@@ -1,25 +1,14 @@
 package net.unseenhand.taskmanagermod.data;
 
-import com.mojang.serialization.Codec;
-import com.mojang.serialization.MapCodec;
-import com.mojang.serialization.codecs.RecordCodecBuilder;
-import net.minecraft.core.UUIDUtil;
-import net.minecraft.core.component.DataComponentType;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
-import net.minecraft.network.RegistryFriendlyByteBuf;
-import net.minecraft.network.codec.ByteBufCodecs;
-import net.minecraft.network.codec.StreamCodec;
-import net.minecraft.world.item.ItemStack;
-import net.unseenhand.taskmanagermod.codec.TaskListCodec;
 import net.unseenhand.taskmanagermod.model.Task;
 import net.unseenhand.taskmanagermod.util.PlayerConstants;
 import net.unseenhand.taskmanagermod.util.PlayerTaskUtil;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.UUID;
+import java.util.*;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 public class PlayerTasks {
 //    private UUID uuid;
@@ -92,5 +81,17 @@ public class PlayerTasks {
     public void loadNBTData(CompoundTag tag) {
         ListTag listTag = tag.getList(PlayerConstants.TAG_TASKS, ListTag.TAG_COMPOUND);
         PlayerTaskUtil.addTaskToTaskList(listTag, tasks);
+    }
+
+    public void swap(int i1, int i2) {
+        Collections.swap(tasks, i1, i2);
+    }
+
+    public void sortBy(Comparator<Task> comparator) {
+        tasks.sort(comparator);
+    }
+
+    public ArrayList<Task> filter(Predicate<Task> predicate) {
+        return tasks.stream().filter(predicate).collect(Collectors.toCollection(ArrayList::new));
     }
 }

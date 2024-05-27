@@ -9,8 +9,6 @@ import net.unseenhand.taskmanagermod.TaskManagerMod;
 public class ModItems {
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, TaskManagerMod.MOD_ID);
 
-
-
     public static void register(IEventBus eventBus) {
         ITEMS.register(eventBus);
     }

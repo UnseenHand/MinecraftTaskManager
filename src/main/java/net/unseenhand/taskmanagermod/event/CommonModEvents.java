@@ -10,8 +10,6 @@ import net.unseenhand.taskmanagermod.network.PacketHandler;
 public class CommonModEvents {
     @SubscribeEvent
     public static void commonSetup(FMLCommonSetupEvent event) {
-        event.enqueueWork(() -> {
-            PacketHandler.registerPackets();
-        });
+        event.enqueueWork(PacketHandler::registerPackets);
     }
 }

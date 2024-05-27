@@ -13,7 +13,7 @@ import net.minecraftforge.fml.common.Mod;
 import net.unseenhand.taskmanagermod.TaskManagerMod;
 import net.unseenhand.taskmanagermod.data.PlayerTasks;
 import net.unseenhand.taskmanagermod.data.PlayerTasksProvider;
-import net.unseenhand.taskmanagermod.screen.TaskManagerScreen;
+import net.unseenhand.taskmanagermod.gui.screens.TaskManagerScreen;
 
 @Mod.EventBusSubscriber(modid = TaskManagerMod.MOD_ID, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class PlayerTasksEvents {

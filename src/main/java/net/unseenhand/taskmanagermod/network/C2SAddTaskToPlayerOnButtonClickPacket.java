@@ -1,18 +1,10 @@
 package net.unseenhand.taskmanagermod.network;
 
-import net.minecraft.ChatFormatting;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.level.Level;
 import net.minecraftforge.event.network.CustomPayloadEvent;
-import net.unseenhand.taskmanagermod.TaskManagerMod;
-import net.unseenhand.taskmanagermod.codec.Codecs;
 import net.unseenhand.taskmanagermod.data.PlayerTasksProvider;
-import net.unseenhand.taskmanagermod.data.TaskManager;
 import net.unseenhand.taskmanagermod.model.Task;
-
-import java.io.IOException;
 
 public class C2SAddTaskToPlayerOnButtonClickPacket implements SimplePacketBase {
 
@@ -49,7 +41,6 @@ public class C2SAddTaskToPlayerOnButtonClickPacket implements SimplePacketBase {
             return false;
         }
 
-        TaskManagerMod.LOGGER.info("Packet start handling");
         ServerPlayer player = context.getSender();
 
         if (player == null) {
@@ -58,36 +49,9 @@ public class C2SAddTaskToPlayerOnButtonClickPacket implements SimplePacketBase {
 
         Task task = new Task(id, name, description, status);
 
-        // (Codecs.PLAYER_TASKS)
-
         player.getCapability(PlayerTasksProvider.PLAYER_TASKS).ifPresent(playerTasks -> {
             playerTasks.addTask(task);
         });
-//        try (Level level = player.level()) {
-//            TaskManager taskManager = TaskManager.get(level);
-//            if (taskManager == null) {
-//                return false;
-//            }
-//
-//            Task task = new Task(id, name, description, status);
-//
-//
-//            TaskManagerMod.LOGGER.info("Adding task to TM");
-//
-//            player.getCapability(PlayerTasksProvider.PLAYER_TASKS).ifPresent(playerTasks -> {
-//                playerTasks.addTask(task);
-//            });
-//
-////             Add task to the StoredData
-////             TODO: Here the set dirty is called
-//            if (!taskManager.addTaskToPlayer(player, task)) {
-//                player.sendSystemMessage(
-//                        Component.translatable(MESSAGE_FAILED_ADD_TASK).withStyle(ChatFormatting.DARK_RED));
-//            }
-//        } catch (IOException e) {
-//            TaskManagerMod.LOGGER.info("Some exception happened while trying to add task to player");
-//            throw new RuntimeException(e);
-//        }
 
         return true;
     }

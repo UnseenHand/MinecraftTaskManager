@@ -1,15 +1,9 @@
 package net.unseenhand.taskmanagermod.network;
 
-import net.minecraft.ChatFormatting;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.level.Level;
 import net.minecraftforge.event.network.CustomPayloadEvent;
 import net.unseenhand.taskmanagermod.data.PlayerTasksProvider;
-import net.unseenhand.taskmanagermod.data.TaskManager;
-
-import java.io.IOException;
 
 public class C2SRemoveTaskToPlayerOnButtonClickPacket implements SimplePacketBase {
     private static final String MESSAGE_FAILED_REMOVE_TASK = "Failed to remove task";

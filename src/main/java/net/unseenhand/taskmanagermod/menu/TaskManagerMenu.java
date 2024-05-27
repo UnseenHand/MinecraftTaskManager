@@ -1,7 +1,6 @@
 package net.unseenhand.taskmanagermod.menu;
 
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.world.MenuProvider;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.*;
@@ -11,9 +10,6 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.unseenhand.taskmanagermod.block.ModBlocks;
 import net.unseenhand.taskmanagermod.blockentity.TaskManagerMenuBlockEntity;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
-
-import javax.annotation.ParametersAreNonnullByDefault;
 
 public class TaskManagerMenu extends AbstractContainerMenu {
     private TaskManagerMenuBlockEntity blockEntity = null;

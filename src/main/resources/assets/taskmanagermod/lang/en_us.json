@@ -1,4 +1,5 @@
 {
   "gui.taskManagerScreen.addTask.btn": "Add Task",
-  "gui.taskManagerScreen.removeTask.btn": "Remove Task"
+  "gui.taskManagerScreen.removeTask.btn": "Remove Task",
+  "gui.taskManagerScreen.popUpScreen": "Filter Window"
 }

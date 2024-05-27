@@ -22,7 +22,7 @@ public class S2COpenTMScreenFromKeyPressedPacket implements SimplePacketBase {
     }
 
     @Override
-    public boolean handle(CustomPayloadEvent.Context context) {
+    public boolean handle(CustomPayloadEvent.Context context) { // TODO: freezes for yoo long
         TaskManagerMod.LOGGER.info("Packet start handling");
         Minecraft mc = Minecraft.getInstance();
         LocalPlayer clientPlayer = mc.player;

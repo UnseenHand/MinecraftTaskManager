@@ -49,6 +49,23 @@ public class PacketHandler {
                 .consumerMainThread(S2CRefreshTSLOnTickPacket::handle)
                 .add();
 
+        INSTANCE.messageBuilder(C2SSwapEntryOnDraggingPacket.class, NetworkDirection.PLAY_TO_SERVER)
+                .encoder(C2SSwapEntryOnDraggingPacket::encode)
+                .decoder(C2SSwapEntryOnDraggingPacket::new)
+                .consumerMainThread(C2SSwapEntryOnDraggingPacket::handle)
+                .add();
+
+        INSTANCE.messageBuilder(C2SSetFilterOnBtnClickPacket.class, NetworkDirection.PLAY_TO_SERVER)
+                .encoder(C2SSetFilterOnBtnClickPacket::encode)
+                .decoder(C2SSetFilterOnBtnClickPacket::new)
+                .consumerMainThread(C2SSetFilterOnBtnClickPacket::handle)
+                .add();
+
+        INSTANCE.messageBuilder(S2CAddIgnoredTasksPacket.class, NetworkDirection.PLAY_TO_CLIENT)
+                .encoder(S2CAddIgnoredTasksPacket::encode)
+                .decoder(S2CAddIgnoredTasksPacket::new)
+                .consumerMainThread(S2CAddIgnoredTasksPacket::handle)
+                .add();
     }
 
     public static void sendToServer(Object msg) {

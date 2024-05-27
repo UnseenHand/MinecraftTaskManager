@@ -1,37 +1,23 @@
 package net.unseenhand.taskmanagermod.gui;
 
-import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.ChatFormatting;
 import net.minecraft.ResourceLocationException;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.ComponentPath;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.ObjectSelectionList;
-import net.minecraft.client.gui.components.TabOrderedElement;
 import net.minecraft.client.gui.font.FontSet;
-import net.minecraft.client.gui.narration.NarratedElementType;
-import net.minecraft.client.gui.narration.NarrationElementOutput;
-import net.minecraft.client.gui.navigation.FocusNavigationEvent;
-import net.minecraft.client.gui.navigation.ScreenRectangle;
-import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.*;
-import net.minecraft.network.chat.contents.PlainTextContents;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.entity.ai.util.HoverRandomPos;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.SwordItem;
 import net.unseenhand.taskmanagermod.TaskManagerMod;
 import net.unseenhand.taskmanagermod.model.Task;
 import net.unseenhand.taskmanagermod.util.PlayerTaskUtil;
-import net.unseenhand.taskmanagermod.util.ResourceLocationHelper;
+import net.unseenhand.taskmanagermod.util.RSHelper;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import java.awt.Color;
 import java.util.function.Function;
 
-public class TaskEntry extends ObjectSelectionList.Entry<TaskEntry> implements TabOrderedElement {
+public class TaskEntry extends ObjectSelectionList.Entry<TaskEntry> implements DraggableElement {
     public static final int TASK_NAME_TEXT_COLOR = Color.BLACK.getRGB();
     public static final int TASK_NAME_X = 5;
     public static final int TASK_NAME_Y = 1;
@@ -48,6 +34,11 @@ public class TaskEntry extends ObjectSelectionList.Entry<TaskEntry> implements T
     private final Task task;
     private TaskSelectionList taskSelectionList;
     private int index;
+    private int x;
+    private int y;
+    private int width;
+    private int height;
+    private int dragCount;
 
     private TaskEntry(Task task) {
         this.mc = Minecraft.getInstance();
@@ -61,64 +52,7 @@ public class TaskEntry extends ObjectSelectionList.Entry<TaskEntry> implements T
 
     @Override
     public int getTabOrderGroup() {
-        return super.getTabOrderGroup();
-    }
-
-    @Override
-    public void mouseMoved(double pMouseX, double pMouseY) {
-        super.mouseMoved(pMouseX, pMouseY);
-    }
-
-    @Override
-    public boolean mouseClicked(double pMouseX, double pMouseY, int pButton) {
-        return super.mouseClicked(pMouseX, pMouseY, pButton);
-    }
-
-    @Override
-    public boolean mouseReleased(double pMouseX, double pMouseY, int pButton) {
-        return super.mouseReleased(pMouseX, pMouseY, pButton);
-    }
-
-    @Override
-    public boolean mouseDragged(double pMouseX, double pMouseY, int pButton, double pDragX, double pDragY) {
-        return super.mouseDragged(pMouseX, pMouseY, pButton, pDragX, pDragY);
-    }
-
-    @Override
-    public boolean mouseScrolled(double pMouseX, double pMouseY, double pScrollX, double pScrollY) {
-        return super.mouseScrolled(pMouseX, pMouseY, pScrollX, pScrollY);
-    }
-
-    @Override
-    public boolean keyPressed(int pKeyCode, int pScanCode, int pModifiers) {
-        return super.keyPressed(pKeyCode, pScanCode, pModifiers);
-    }
-
-    @Override
-    public boolean keyReleased(int pKeyCode, int pScanCode, int pModifiers) {
-        return super.keyReleased(pKeyCode, pScanCode, pModifiers);
-    }
-
-    @Override
-    public boolean charTyped(char pCodePoint, int pModifiers) {
-        return super.charTyped(pCodePoint, pModifiers);
-    }
-
-    @Nullable
-    @Override
-    public ComponentPath nextFocusPath(@NotNull FocusNavigationEvent pEvent) {
-        return super.nextFocusPath(pEvent);
-    }
-
-    @Nullable
-    @Override
-    public ComponentPath getCurrentFocusPath() {
-        return super.getCurrentFocusPath();
-    }
-
-    @Override
-    public @NotNull ScreenRectangle getRectangle() {
-        return super.getRectangle();
+        return 1;
     }
 
     @Override
@@ -132,6 +66,12 @@ public class TaskEntry extends ObjectSelectionList.Entry<TaskEntry> implements T
                        int mouseY,
                        boolean hovering,
                        float partialTick) {
+        this.index = index;
+        this.x = left;
+        this.y = top;
+        this.width = width;
+        this.height = height;
+
         renderBack(guiGraphics, index, top, left, width, height, mouseX, mouseY, hovering, partialTick);
 
         // new Font(this::genFontSet, true);
@@ -163,57 +103,9 @@ public class TaskEntry extends ObjectSelectionList.Entry<TaskEntry> implements T
         // RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
     }
 
-    private @NotNull MutableComponent getFormattedComponent(int containerWidth) {
-        String text = PlayerTaskUtil.getStatusFromMap(task.status());
-        MutableComponent component;
-
-        if (mc.font.width(text) > containerWidth) {
-            component = Component.literal(mc.font.plainSubstrByWidth(text+ "...", containerWidth) + "...");
-        } else {
-            component = Component.literal(text);
-        }
-
-        return component.withStyle(ChatFormatting.LIGHT_PURPLE);
-    }
-
-    private Style getHoveredTooltipTextStyle() {
-        return Style.EMPTY.withItalic(true)
-                .withColor(0x28D7D7); // Turquoise Color
-    }
-
-    private static @NotNull Style getHoveredTooltipStyle(Component toolTip) {
-        return Style.EMPTY.withHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, toolTip));
-    }
-
-    private Function<ResourceLocation, FontSet> fonts;
-
-    private FontSet genFontSet(ResourceLocation resourceLocation) {
-        try (FontSet fontSet =
-                     new FontSet(Minecraft.getInstance().textureManager, ResourceLocationHelper.prefix(FONT_PATH))) {
-            return fontSet;
-        } catch (Exception e) {
-            throw new ResourceLocationException(e.getMessage());
-        }
-    }
-
     @Override
     public @NotNull Component getNarration() {
         return Component.literal("Task #???");
-    }
-
-    @Override
-    public void updateNarration(@NotNull NarrationElementOutput output) {
-        super.updateNarration(output);
-    }
-
-    @Override
-    public void setFocused(boolean isFocused) {
-        super.setFocused(isFocused);
-    }
-
-    @Override
-    public boolean isFocused() {
-        return super.isFocused();
     }
 
     @Override
@@ -247,12 +139,96 @@ public class TaskEntry extends ObjectSelectionList.Entry<TaskEntry> implements T
         // guiGraphics.fill(width / 2, height / 3, width, height / 3 + 1, BACKGROUND_FILL_COLOR);
     }
 
-    @Override
-    public boolean isMouseOver(double p_93537_, double p_93538_) {
-        return super.isMouseOver(p_93537_, p_93538_);
-    }
-
     public Task getTask() {
         return task;
+    }
+
+    public int getIndex() {
+        return index;
+    }
+
+    public void setIndex(int index) {
+        this.index = index;
+    }
+
+    public int getX() {
+        return x;
+    }
+
+    public void setX(int x) {
+        this.x = x;
+    }
+
+    public int getY() {
+        return y;
+    }
+
+    public void setY(int y) {
+        this.y = y;
+    }
+
+    public int getWidth() {
+        return width;
+    }
+
+    public void setWidth(int width) {
+        this.width = width;
+    }
+
+    public int getHeight() {
+        return height;
+    }
+
+    public void setHeight(int height) {
+        this.height = height;
+    }
+
+    private @NotNull MutableComponent getFormattedComponent(int containerWidth) {
+        String text = PlayerTaskUtil.getStatusFromMap(task.status());
+        MutableComponent component;
+
+        if (mc.font.width(text) > containerWidth) {
+            component = Component.literal(mc.font.plainSubstrByWidth(text+ "...", containerWidth) + "...");
+        } else {
+            component = Component.literal(text);
+        }
+
+        return component.withStyle(ChatFormatting.LIGHT_PURPLE);
+    }
+
+    private Style getHoveredTooltipTextStyle() {
+        return Style.EMPTY.withItalic(true)
+                .withColor(0x28D7D7); // Turquoise Color
+    }
+
+    private static @NotNull Style getHoveredTooltipStyle(Component toolTip) {
+        return Style.EMPTY.withHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, toolTip));
+    }
+
+    private Function<ResourceLocation, FontSet> fonts;
+
+    private FontSet genFontSet(ResourceLocation resourceLocation) {
+        try (FontSet fontSet =
+                     new FontSet(Minecraft.getInstance().textureManager, RSHelper.mod(FONT_PATH))) {
+            return fontSet;
+        } catch (Exception e) {
+            throw new ResourceLocationException(e.getMessage());
+        }
+    }
+
+    public void incrementDragCount() {
+        dragCount++;
+    }
+
+    public void resetDragCount() {
+        dragCount = 0;
+    }
+
+    public int getDragCount() {
+        return dragCount;
+    }
+
+    public void setDragCount(int dragCount) {
+        this.dragCount = dragCount;
     }
 }

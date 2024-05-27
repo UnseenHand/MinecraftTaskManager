@@ -6,7 +6,7 @@ import net.minecraftforge.client.event.ScreenEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.unseenhand.taskmanagermod.TaskManagerMod;
-import net.unseenhand.taskmanagermod.screen.TaskManagerScreen;
+import net.unseenhand.taskmanagermod.gui.screens.TaskManagerScreen;
 
 /**
  * Handles the mouse button clicks events

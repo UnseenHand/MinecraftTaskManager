@@ -22,13 +22,10 @@ public class S2COpenTMScreenFromKeyPressedPacket implements SimplePacketBase {
     }
 
     @Override
-    public boolean handle(CustomPayloadEvent.Context context) { // TODO: freezes for yoo long
+    public boolean handle(CustomPayloadEvent.Context context) {
         TaskManagerMod.LOGGER.info("Packet start handling");
         Minecraft mc = Minecraft.getInstance();
         LocalPlayer clientPlayer = mc.player;
-//        ServerPlayer serverPlayer = context.getSender();
-//        if (serverPlayer == null)
-//            return false;
 
         if (clientPlayer == null)
             return false;
@@ -38,8 +35,6 @@ public class S2COpenTMScreenFromKeyPressedPacket implements SimplePacketBase {
                 return false;
             }
 
-            // Must be only on the client side where the
-            // MC client instance can be obtained
             TaskManagerGuiWrapper.openGUI(mc, level, clientPlayer);
         } catch (IOException e) {
             throw new RuntimeException(e);

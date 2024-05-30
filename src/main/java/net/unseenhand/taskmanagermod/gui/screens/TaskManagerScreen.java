@@ -105,7 +105,7 @@ public class TaskManagerScreen extends Screen {
     @Override
     public void render(@NotNull GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick) {
         super.render(guiGraphics, mouseX, mouseY, partialTick);
-        guiGraphics.blit(FRAME, 0, 0,0, 0, width, height, width, height * 2);
+        // guiGraphics.blit(FRAME, 0, 0,0, 0, width, height, width, height * 2);
     }
 
     public EditBox getSearchTextField() {
@@ -204,8 +204,6 @@ public class TaskManagerScreen extends Screen {
         addRenderableWidget(taskSelectionList); // TODO: adding the task list widget
 
         TaskManagerMod.LOGGER.info("Screen TAB Order Group: {}", getTabOrderGroup());
-
-        // ForgeRenderTypes.getItemLayeredTranslucent()
     }
 
     private void onFilterBtnPress(Button b) {
@@ -308,28 +306,6 @@ public class TaskManagerScreen extends Screen {
             int outlineHeight = height;
             guiGraphics.renderOutline(x, y, outlineWidth, outlineHeight, 0xffff0000);
 
-//            Minecraft mc = Minecraft.getInstance();
-//            MutableComponent component;
-//            Font f = mc.font;
-//            Component comp = submitFilterBtn.getMessage();
-//            String text = comp.getString();
-//            int containerWidth = submitFilterBtn.getWidth();
-//
-//            if (f.width(text) > containerWidth) {
-//                submitFilterBtn.setMessage(Component.empty());
-//
-//                int wordWrapHeight = f.wordWrapHeight(text, containerWidth);
-//
-//                int rgbColorValue = 16777113;
-//                int x = submitFilterBtn.getX() - 20;
-//                int y = submitFilterBtn.getY();
-//                for (FormattedCharSequence sequence : font.split(FormattedText.of(text), containerWidth)) {
-//                    guiGraphics.drawCenteredString(font, sequence, x, y,
-//                            rgbColorValue);
-//                    y += 9; // Increment to the new line
-//                }
-//            }
-
             super.render(guiGraphics, mouseX, mouseY, partialTick);
         }
 
@@ -376,11 +352,11 @@ public class TaskManagerScreen extends Screen {
         }
 
         private void OnValueChange(SwitchCheckbox checkbox, boolean b) {
-//            checkbox.setTooltip(Tooltip.create(Component.literal(checkbox.selected() ? "On" : "Off")));
         }
 
         private void onSubmitFilter(Button button) {
             TaskListFilter filter = new TaskListFilter(sortByNameCheckbox.selected(), sortByStatusCheckbox.selected());
+            filter.setSearchTerm("");
             PacketHandler.sendToServer(new C2SSetFilterOnBtnClickPacket(filter));
         }
     }

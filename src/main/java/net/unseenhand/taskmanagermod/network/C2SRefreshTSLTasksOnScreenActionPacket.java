@@ -19,7 +19,6 @@ public class C2SRefreshTSLTasksOnScreenActionPacket implements SimplePacketBase 
 
     }
 
-    // TODO: This packet has to much responsibility, try to separate the server-side and client-side processing
     @Override
     public boolean handle(CustomPayloadEvent.Context context) {
         if (context.isClientSide()) {

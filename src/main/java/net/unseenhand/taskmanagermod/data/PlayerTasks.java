@@ -11,42 +11,15 @@ import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 public class PlayerTasks {
-//    private UUID uuid;
     private List<Task> tasks;
 
-//    public static final MapCodec<PlayerTasks> MAP_CODEC = RecordCodecBuilder.mapCodec(builder -> builder
-//            .group(
-//                    UUIDUtil.CODEC.fieldOf("uuid").forGetter(PlayerTasks::getUUID),
-//                    PlayerTasks.NULLABLE_LIST_CODEC.fieldOf("tasks").forGetter(PlayerTasks::getTasks))
-//            .apply(builder, PlayerTasks::new)
-//    );
-//
-//    public static final Codec<List<Task>> NULLABLE_LIST_CODEC = new TaskListCodec();
-//    public static final Codec<PlayerTasks> CODEC = PlayerTasks.MAP_CODEC.codec();
-//    public static final StreamCodec<RegistryFriendlyByteBuf, PlayerTasks> STREAM_CODEC = StreamCodec
-//            .composite(
-//                    UUIDUtil.STREAM_CODEC,
-//                    PlayerTasks::getUUID,
-//                    Task.STREAM_CODEC.apply(ByteBufCodecs.list()),
-//                    PlayerTasks::getTasks,
-//                    PlayerTasks::new);
-
-    public PlayerTasks(UUID uuid, List<Task> tasks) {
-//        this.uuid = uuid;
+    public PlayerTasks(List<Task> tasks) {
         this.tasks = tasks;
     }
 
     public PlayerTasks() {
         tasks = new ArrayList<>();
     }
-
-//    public <T> T get(DataComponentType<T> type) {
-//        return new PlayerTasks();
-//    }
-
-//    private UUID getUUID() {
-//        return uuid;
-//    }
 
     public List<Task> getTasks() {
         return tasks;

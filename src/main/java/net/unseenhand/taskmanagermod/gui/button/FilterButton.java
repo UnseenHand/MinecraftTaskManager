@@ -44,7 +44,6 @@ public class FilterButton extends ImageButton {
     public void renderWidget(@NotNull GuiGraphics guiGraphics, int pMouseX, int pMouseY, float pPartialTick) {
         ResourceLocation location = FILTER_BTN_SPRITES.get(this.isActive(), this.isHoveredOrFocused());
         RenderSystem.setShader(GameRenderer::getPositionTexShader);
-        // RenderSystem.setShaderTexture(0);
         RenderSystem.setShaderColor(1F, 1F, 1F, 1F);
         int i;
         int j;
@@ -74,7 +73,6 @@ public class FilterButton extends ImageButton {
 
         PoseStack matrixStack = guiGraphics.pose();
         matrixStack.pushPose();
-        // matrixStack.translate(getX(), getY(), );
         guiGraphics.blitSprite(location, this.getX() + this.hoverOffset, this.getY(),
                 (int) (TaskManagerScreen.FILTER_BTN_WIDTH / 1),
                 (int) (TaskManagerScreen.FILTER_BTN_HEIGHT / 1));
@@ -82,7 +80,6 @@ public class FilterButton extends ImageButton {
         matrixStack.translate(0.0F, 0.0F, 100.0F);
         RenderSystem.setShaderColor(1F, 1F, 1F, 1F);
 
-        // RenderSystem.enableTexture();
         RenderSystem.enableBlend();
         RenderSystem.defaultBlendFunc();
         RenderSystem.setShader(GameRenderer::getPositionColorTexShader);
@@ -97,43 +94,6 @@ public class FilterButton extends ImageButton {
         builder.vertex(m, 1F, 1F, 0F).color(cr, cg, cb, ca).uv(0F, 0F).endVertex();
         tessellator.end();
         matrixStack.popPose();
-
-//        PoseStack poseStack = guiGraphics.pose();
-//        ResourceLocation location = FILTER_BTN_SPRITES.get(this.isActive(), this.isHoveredOrFocused());
-//        // float scale = TaskManagerScreen.getScale(this.screen, minecraft); // The scaling for elements relative to
-//        // the
-//        // true screen
-//        // scale.
-//
-//        RenderSystem.disableDepthTest();
-//        RenderSystem.depthMask(false);
-//        RenderSystem.enableBlend();
-//        RenderSystem.defaultBlendFunc();
-//        RenderSystem.setShader(GameRenderer::getPositionTexShader);
-//        guiGraphics.setColor(1.0F, 1.0F, 1.0F, 0.7f);
-//        RenderSystem.setShaderTexture(0, location);
-//
-//        BufferBuilder builder = tesselator.getBuilder();
-//        builder.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_TEX);
-//        builder.vertex(0.0D, scaledHeight, -90.0D).uv(0.0F, 1.0F).endVertex();
-//        builder.vertex(scaledWidth, scaledHeight, -90.0D).uv(1.0F, 1.0F).endVertex();
-//        builder.vertex(scaledWidth, 0.0D, -90.0D).uv(1.0F, 0.0F).endVertex();
-//        builder.vertex(0.0D, 0.0D, -90.0D).uv(0.0F, 0.0F).endVertex();
-//        tesselator.end();
-//
-//        // RenderSystem.setShaderTexture(0, location);
-//        guiGraphics.blitSprite(location, this.getX() + this.hoverOffset, this.getY(),
-//                (int) (TaskManagerScreen.FILTER_BTN_WIDTH / 1),
-//                (int) (TaskManagerScreen.FILTER_BTN_HEIGHT / 1));
-//
-//        RenderSystem.depthMask(true);
-//        RenderSystem.enableDepthTest();
-//        RenderSystem.setShaderColor(1.0f, 1.0f, 1.0f, 1.0f);
-//        RenderSystem.disableBlend();
-//
-////        poseStack.pushPose();
-////        poseStack.popPose();
-//        // super.renderWidget(guiGraphics, pMouseX, pMouseY, pPartialTick);
     }
 
     public void setPressed(boolean pressed) {

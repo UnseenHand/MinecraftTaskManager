@@ -31,15 +31,9 @@ public class TaskManagerMod {
         ModItems.register(modEventBus);
         ModMenus.register(modEventBus);
 
-        // Register the commonSetup method for modloading
-        // modEventBus.addListener(this::commonSetup);
-
         // Register ourselves for server and other game events we are interested in
         IEventBus forgeEventBus = MinecraftForge.EVENT_BUS;
         forgeEventBus.register(this);
-        // forgeEventBus.addListener(ModPlayerEventHandler::loadPlayerInfo);
-        // forgeEventBus.addListener(ModPlayerEventHandler::savePlayerInfo);
-
 
         // Register our mod's ForgeConfigSpec so that Forge can create and load the config file for us
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, Config.SPEC);
@@ -63,6 +57,4 @@ public class TaskManagerMod {
             LOGGER.info("MINECRAFT NAME >> {}", Minecraft.getInstance().getUser().getName());
         }
     }
-
-
 }

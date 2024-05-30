@@ -48,16 +48,6 @@ public class PlayerTasksEvents {
     public static void onPlayerTickServer(TickEvent.PlayerTickEvent event) {
         if (event.side.isClient() || event.phase == TickEvent.Phase.START)
             return;
-
-//        Player player = event.player;
-//        Level level = player.level();
-//
-//        TaskManager manager = TaskManager.get(level);
-//
-//        if (manager == null)
-//            return;
-//
-//        manager.tick(level);
     }
 
     @SubscribeEvent

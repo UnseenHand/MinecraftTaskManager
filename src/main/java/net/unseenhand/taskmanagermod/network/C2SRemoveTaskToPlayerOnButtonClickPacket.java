@@ -33,20 +33,6 @@ public class C2SRemoveTaskToPlayerOnButtonClickPacket implements SimplePacketBas
             playerTasks.removeTaskById(id);
         });
 
-//        try (Level level = player.level()) {
-//            TaskManager taskManager = TaskManager.get(level);
-//            if (taskManager == null) {
-//                return false;
-//            }
-//
-//            if (!taskManager.removeTaskFromPlayer(player, id)) {
-//                player.sendSystemMessage(
-//                        Component.translatable(MESSAGE_FAILED_REMOVE_TASK).withStyle(ChatFormatting.DARK_RED));
-//            }
-//        } catch (IOException e) {
-//            throw new RuntimeException(e);
-//        }
-
         return true;
     }
 

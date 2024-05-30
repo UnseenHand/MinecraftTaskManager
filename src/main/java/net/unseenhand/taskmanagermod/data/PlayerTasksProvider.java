@@ -49,6 +49,4 @@ public class PlayerTasksProvider implements ICapabilityProvider, INBTSerializabl
         }
         return playerTasks;
     }
-
-
 }

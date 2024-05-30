@@ -12,7 +12,6 @@ public class C2SSwapEntryOnDraggingPacket implements SimplePacketBase {
     public C2SSwapEntryOnDraggingPacket() {
     }
 
-    // TODO: Indices are updated with the list of entries, thus the logic clashes
     public C2SSwapEntryOnDraggingPacket(int i1, int i2) {
         this.i1 = i1;
         this.i2 = i2;
@@ -35,13 +34,10 @@ public class C2SSwapEntryOnDraggingPacket implements SimplePacketBase {
         }
 
         player.getCapability(PlayerTasksProvider.PLAYER_TASKS).ifPresent(playerTasks -> {
-            // TODO: think of how to swap the elements (18.05.24 - 19.05.24)
             playerTasks.swap(i1, i2);
         });
 
         PacketHandler.sendToServer(new C2SRefreshTSLTasksOnScreenActionPacket());
-
-        // PacketHandler.se(new C2SRefreshTSLTasksOnScreenActionPacket(), player);
 
         return true;
     }

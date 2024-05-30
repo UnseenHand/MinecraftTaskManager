@@ -3,7 +3,6 @@ package net.unseenhand.taskmanagermod.network;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraftforge.event.network.CustomPayloadEvent;
-import net.unseenhand.taskmanagermod.TaskManagerMod;
 import net.unseenhand.taskmanagermod.data.PlayerTasksProvider;
 import net.unseenhand.taskmanagermod.data.TaskListFilter;
 import net.unseenhand.taskmanagermod.model.Task;
@@ -14,7 +13,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class C2SSetFilterOnBtnClickPacket implements SimplePacketBase {
-    private String searchTerm;
+    private String searchTerm = "";
     private boolean byName;
     private boolean byStatus;
 
@@ -55,8 +54,6 @@ public class C2SSetFilterOnBtnClickPacket implements SimplePacketBase {
             }
 
             PacketHandler.sendToAllClients(new S2CAddIgnoredTasksPacket(filtered));
-
-            // PacketHandler.sendToAllClients(new S2CRefreshTSLOnTickPacket(filtered));
 
             playerTasks.sortBy(byName ? Comparator.comparing(Task::name) : Comparator.comparingInt(Task::status));
         });

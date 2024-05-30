@@ -74,10 +74,7 @@ public class TaskEntry extends ObjectSelectionList.Entry<TaskEntry> implements D
 
         renderBack(guiGraphics, index, top, left, width, height, mouseX, mouseY, hovering, partialTick);
 
-        // new Font(this::genFontSet, true);
-
         guiGraphics.drawString(mc.font,
-                //mcClient.font
                 Component.literal(task.name()).withColor(TEXT_COLOR),
                 left + TASK_NAME_X,
                 top + TASK_NAME_Y,
@@ -99,8 +96,6 @@ public class TaskEntry extends ObjectSelectionList.Entry<TaskEntry> implements D
             Component toolTip = Component.literal("Dead").withStyle(getHoveredTooltipTextStyle());
             guiGraphics.renderComponentHoverEffect(mc.font, getHoveredTooltipStyle(toolTip), mouseX, mouseY);
         }
-
-        // RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
     }
 
     @Override
@@ -119,8 +114,6 @@ public class TaskEntry extends ObjectSelectionList.Entry<TaskEntry> implements D
                            int mouseY,
                            boolean isMouseOver,
                            float partialTick) {
-        // guiGraphics.fill(left, top, left + width, top + height, BACKGROUND_FILL_COLOR);
-
         guiGraphics.renderOutline(left, top, width, height, BACKGROUND_FILL_COLOR);
 
         guiGraphics.fill(left + width / 2,
@@ -134,9 +127,6 @@ public class TaskEntry extends ObjectSelectionList.Entry<TaskEntry> implements D
                 left + width / 2 + 1,
                 top + height / 3,
                 BACKGROUND_FILL_COLOR);
-
-        // isFocused()
-        // guiGraphics.fill(width / 2, height / 3, width, height / 3 + 1, BACKGROUND_FILL_COLOR);
     }
 
     public Task getTask() {

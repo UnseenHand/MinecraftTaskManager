@@ -66,7 +66,6 @@ public class TaskSelectionList extends ObjectSelectionList<TaskEntry> {
 
     @Override
     protected void renderListBackground(@NotNull GuiGraphics guiGraphics) {
-        // super.renderListBackground(guiGraphics);
         RenderSystem.enableBlend();
         ResourceLocation resourcelocation = this.minecraft.level == null ? MENU_LIST_BACKGROUND : INWORLD_MENU_LIST_BACKGROUND;
         guiGraphics.blit(
@@ -132,14 +131,9 @@ public class TaskSelectionList extends ObjectSelectionList<TaskEntry> {
             if (this.getItemCount() != 0 && inListBoundsOrInRange(mouseX, mouseY)) {
                 releasedAtEntry = getLastElement();
                 releasedAtTheEnd = true;
-                // releasedAtEntry.setIndex(dataSize - 1); // forcefully setting entry index of the real data
-                // container!!!
             }
         }
 
-        // If at the place where the mouse was clicked of the list,
-        // entry does not exist, it shouldn't be reset as there is nothing to reset
-        // TODO: Probably the problem is here as it is not synced with the packet that is constantly sent
         if (focusedAtEntry != null) {
             focusedAtEntry.resetDragCount();
         }
@@ -168,11 +162,7 @@ public class TaskSelectionList extends ObjectSelectionList<TaskEntry> {
     public void mouseMoved(double mouseX, double mouseY) {
         if (isDragging()) {
             if (focusedAtEntry != null) {
-                // TODO: Entry that is being dragged should be removed from the screen
-                // Note: Consider that how the entry is usually updated
-                // Also it is usually
                 if (focusedAtEntry.getDragCount() == 0) {
-                    // Remove the entry from the client
                     removeEntry(focusedAtEntry);
                 }
             }
@@ -189,8 +179,6 @@ public class TaskSelectionList extends ObjectSelectionList<TaskEntry> {
     public void refreshList() {
         if (tasks == null) return;
 
-        // TODO: this shit is busted
-        // This must be modified `set to` to perform
         if (tasks.size() != oSize || screen.isInitiated() || isModified()) {
             clearEntries();
 
@@ -206,8 +194,6 @@ public class TaskSelectionList extends ObjectSelectionList<TaskEntry> {
     public void onEntryDragged() {
         if (focusedAtEntry != null && releasedAtEntry != null) {
             if (focusedAtEntry != releasedAtEntry) {
-                // Swap the entries
-                // TODO: Probably the condition should be passed here for the update when the
                 int otherIndex;
 
                 if (releasedAtTheEnd) {

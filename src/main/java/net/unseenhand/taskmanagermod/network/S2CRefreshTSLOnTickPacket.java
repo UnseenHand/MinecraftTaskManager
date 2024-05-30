@@ -18,7 +18,6 @@ public class S2CRefreshTSLOnTickPacket implements SimplePacketBase {
     private final List<String> ignoredTaskIds;
 
     public S2CRefreshTSLOnTickPacket(List<Task> tasks, List<String> ignoredTaskIds, Predicate<Task> predicate) {
-        // .stream().filter(predicate).toList()
         this(tasks, ignoredTaskIds); // Used filtering
     }
 
